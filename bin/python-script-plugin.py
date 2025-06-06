@@ -19,16 +19,17 @@ try:
     data = json.loads(stdinput)
 
     event_id = data["event"]
-    source_script_path = data["params"]["scriptpath"]
+    source_script_path = data["params"]["scriptpath"] # 'python'
     required_packages = data["params"]["requirements"].splitlines()
     environment_variables = data["params"]["environ"].splitlines()
     params = data["params"]["params"]
-
+    print(data)
     job_script_path = Path(ROOT_PYTHON_RUNTIME_PATH / str(event_id) / source_script_path)
     job_runtime_path = job_script_path.parent
     if not job_runtime_path.exists():
         print(f"Initializing event runtime path: {job_runtime_path}")
         job_runtime_path.mkdir(parents=True, exist_ok=True)
+        print("Copying scripts...")
         shutil.copy2(ROOT_SOURCE_SCRIPTS_PATH / source_script_path, job_script_path)
         open(job_runtime_path / "requirements.txt", 'w').close()
     elif (
@@ -73,5 +74,7 @@ except Exception as e:
     print(json.dumps({
         "complete": 1,
         "code": 999,
+        "job_script_path": job_script_path,
+        "job_runtime_path": job_runtime_path,
         "description": str(e)
     }))

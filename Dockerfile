@@ -6,8 +6,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 RUN apk add --no-cache python3 py3-pip
 
 WORKDIR /opt/cronicle
-COPY bin/script.py ./bin/script.py
-RUN chmod +x ./bin/script.py
+COPY bin/script.py ./bin/script-plugin.py
+RUN chmod +x ./bin/script-plugin.py
 COPY config/python.pixl ./import/python.pixl
 
 COPY bin/entrypoint.sh ./bin/

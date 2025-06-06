@@ -14,6 +14,6 @@ run:
 		-v $$HOME/.cronicle/scripts:/opt/cronicle/scripts:rw \
 		-p 3012:3012 \
 		-d \
-		--restart always \
+		--restart unless-stopped \
 		--name cronicle \
 		cronicle-python

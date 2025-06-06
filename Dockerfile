@@ -1,12 +1,13 @@
-FROM soulteary/cronicle:0.9.46
+FROM soulteary/cronicle:0.9.80
 
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
 RUN apk add --no-cache python3 py3-pip
 
 WORKDIR /opt/cronicle
-COPY bin/python-script-plugin.py ./bin/python-script-plugin.py
-RUN chmod +x ./bin/python-script-plugin.py
+COPY bin/script.py ./bin/script.py
+RUN chmod +x ./bin/script.py
 COPY config/python.pixl ./import/python.pixl
 
 COPY bin/entrypoint.sh ./bin/
